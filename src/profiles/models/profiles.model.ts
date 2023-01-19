@@ -4,22 +4,24 @@ import {
   Column,
   AllowNull,
   DataType,
+  HasMany,
 } from 'sequelize-typescript';
 import { ProfileType } from '../types';
 import { profileTypeConstant } from '../constants';
+import { ContractsModel } from '../../contracts';
 
-@Table({ modelName: 'Profile' })
+@Table({ modelName: 'Profiles' })
 export class ProfilesModel extends Model {
-  @Column
   @AllowNull(false)
+  @Column
   firstName: string;
 
-  @Column
   @AllowNull(false)
+  @Column
   lastName: string;
 
-  @Column
   @AllowNull(false)
+  @Column
   profession: string;
 
   @Column({ type: DataType.DECIMAL(12, 2) })
@@ -27,4 +29,12 @@ export class ProfilesModel extends Model {
 
   @Column(DataType.ENUM(...profileTypeConstant))
   type: ProfileType;
+
+  @HasMany(() => ContractsModel, {
+    as: 'Contractor',
+  })
+  contractors: ContractsModel[];
+
+  @HasMany(() => ContractsModel, { as: 'Client' })
+  clients: ContractsModel[];
 }
