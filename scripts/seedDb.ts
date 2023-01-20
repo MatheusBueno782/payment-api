@@ -1,6 +1,6 @@
-import { ProfilesModel } from '../src/profiles';
-import { ContractsModel } from '../src/contracts';
-import { JobsModel } from '../src/jobs';
+import { ProfilesModel } from '../src/profiles/models/profiles.model';
+import { ContractsModel } from '../src/contracts/models/contracts.model';
+import { JobsModel } from '../src/jobs/models/jobs.model';
 import { Sequelize } from 'sequelize-typescript';
 
 seedDb();

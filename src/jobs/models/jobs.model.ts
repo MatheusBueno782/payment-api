@@ -7,7 +7,7 @@ import {
   Model,
   Table,
 } from 'sequelize-typescript';
-import { ContractsModel } from '../../contracts';
+import { ContractsModel } from '../../contracts/models/contracts.model';
 
 @Table({ tableName: 'Jobs' })
 export class JobsModel extends Model {

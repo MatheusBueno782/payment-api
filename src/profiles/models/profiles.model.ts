@@ -7,8 +7,8 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { ProfileType } from '../types';
-import { profileTypeConstant } from '../constants';
-import { ContractsModel } from '../../contracts';
+import { profileTypeConstant } from '../constants/profile.constant';
+import { ContractsModel } from '../../contracts/models/contracts.model';
 
 @Table({ modelName: 'Profiles' })
 export class ProfilesModel extends Model {
@@ -32,9 +32,13 @@ export class ProfilesModel extends Model {
 
   @HasMany(() => ContractsModel, {
     as: 'Contractor',
+    foreignKey: 'ContractorId',
   })
   contractors: ContractsModel[];
 
-  @HasMany(() => ContractsModel, { as: 'Client' })
+  @HasMany(() => ContractsModel, {
+    as: 'Client',
+    foreignKey: 'ClientId',
+  })
   clients: ContractsModel[];
 }

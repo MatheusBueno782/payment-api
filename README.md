@@ -1,30 +1,9 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Payment Api to manage contractors and clients. The idea of this project is to, in a limited amount of time,   
+
+
+Note: this project was created with [Nest](https://github.com/nestjs/nest).
 
 ## Installation
 
@@ -51,23 +30,32 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
 # test coverage
 $ npm run test:cov
 ```
 
-## Support
+### TODOs
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- implement `/balances/deposit/:userId`.
+I had a lot of doubts about the requisites on this one, normally the best approach on this situation would be asking 
+someone from the product team for clarification, but I don't have enough time. That being said, the most important point
+if this endpoint is that the db operation **MUST** be done within a transaction, otherwise we will suffer from nasty 
+race conditions, which can lead to inconsistencies on clients' balances.
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Better handle errors. Due to the lack of time I invoked http errors on the use case(service in Nest convention) layer,
+I'm aware this is a bad practice. A good approach here would be using my own error classes with business errors and then 
+convert it to Http errors using exceptionFilters.
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+- Better dependency injection. In this project I'm using dependency injection in the simplest(and fastest) way, this way I'm still 
+using the concrete class as the type of my injected dependencies, thus still violating dependency inversion principle.
+A simple solution for that would be extracting interfaces from the injectable, in association with a different approach
+for registering the dependencies `{provide: DEPENDENCY_TOKEN, useClass: ConcreteClass}`.
+
+- 
+
+- Observability. I'm a big fan of this subject, and I strongly believe that by having observability we save a huge amount
+of time on debugging and improve the overall performance of the entire team. That being said, unfortunately I didn't have time to 
+implement logs, tracing, or metrics. If I had time, taking the size of the application I would focus on properly log our
+requests, and try to extract consistent information for an eventual debugging.

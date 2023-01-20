@@ -1,27 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-
 import { ContractsModule } from './contracts/contracts.module';
 import { JobsModule } from './jobs/jobs.module';
-import { ProfilesModel } from './profiles';
-import { ContractsModel } from './contracts';
-import { JobsModel } from './jobs';
+import { ProfilesModel } from './profiles/models/profiles.model';
+import { ContractsModel } from './contracts/models/contracts.model';
+import { JobsModel } from './jobs/models/jobs.model';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
-    SequelizeModule.forRoot({
-      dialect: 'sqlite',
-      storage: './database.sqlite3',
-      models: [ProfilesModel, ContractsModel, JobsModel],
-    }),
     ProfilesModule,
     ContractsModule,
     JobsModule,
+    SequelizeModule.forRoot({
+      dialect: 'sqlite',
+      storage: './database.sqlite3',
+      models: [JobsModel, ContractsModel, ProfilesModel],
+    }),
+    AdminModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
