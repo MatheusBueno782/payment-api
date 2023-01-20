@@ -24,17 +24,17 @@ export class ContractsModel extends Model {
 
   @ForeignKey(() => ProfilesModel)
   @Column
-  ContractorId: number;
-
-  @BelongsTo(() => ProfilesModel, { as: 'Contractor' })
-  contractor: ProfilesModel;
-
-  @ForeignKey(() => ProfilesModel)
-  @Column
   ClientId: number;
 
   @BelongsTo(() => ProfilesModel, { as: 'Client' })
   client: ProfilesModel;
+
+  @ForeignKey(() => ProfilesModel)
+  @Column
+  ContractorId: number;
+
+  @BelongsTo(() => ProfilesModel, { as: 'Contractor' })
+  contractor: ProfilesModel;
 
   @HasMany(() => JobsModel)
   jobs: JobsModel[];

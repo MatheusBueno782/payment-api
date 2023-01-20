@@ -7,7 +7,7 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { ProfileType } from '../types';
-import { profileTypeConstant } from '../constants/profile.constant';
+import { profileTypeConstant } from '../profile.constant';
 import { ContractsModel } from '../../contracts/models/contracts.model';
 
 @Table({ modelName: 'Profiles' })
